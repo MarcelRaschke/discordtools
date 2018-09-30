@@ -554,32 +554,6 @@ class Client {
     this._timeouts.add(timeout);
     return timeout;
   }
-   * Send a message to a channel.
- * @arg {Object} input
- * @arg {Snowflake} input.to - The target Channel or User ID.
- * @arg {String} input.message - The message content.
- * @arg {Object} [input.embed] - An embed object to include
- * @arg {Boolean} [input.tts] - Enable Text-to-Speech for this message.
- * @arg {Number} [input.nonce] - Number-used-only-ONCE. The Discord client uses this to change the message color from grey to white.
- * @arg {Boolean} [input.typing] - Indicates whether the message should be sent with simulated typing. Based on message length.
- */
-DCP.sendMessage = function(input, callback) {
-	var message = generateMessage(input.message || '', input.embed);
-	message.tts = (input.tts === true);
-	message.nonce = input.nonce || message.nonce;
-
-	if (input.typing === true) {
-		return simulateTyping(
-			this,
-			input.to,
-			message,
-			( (message.content.length * 0.12) * 1000 ),
-			callback
-		);
-	}
-
-	sendMessage(this, input.to, message, callback);
-}
 }
 
 module.exports = Client;
